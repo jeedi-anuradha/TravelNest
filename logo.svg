@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- Background shape -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22577a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#38a3a5;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main logo shape - location pin combined with house -->
+  <path d="M200 100 C165 100, 140 130, 140 160 C140 190, 170 225, 200 250 C230 225, 260 190, 260 160 C260 130, 235 100, 200 100 Z" fill="url(#bgGradient)" />
+  
+  <!-- House inside pin -->
+  <path d="M170 160 L200 130 L230 160 L230 200 L170 200 Z" fill="white" />
+  
+  <!-- Window -->
+  <rect x="185" y="175" width="10" height="10" rx="1" fill="#22577a" />
+  <rect x="205" y="175" width="10" height="10" rx="1" fill="#22577a" />
+  
+  <!-- Door -->
+  <rect x="190" y="185" width="20" height="15" rx="2" fill="#22577a" />
+  
+  <!-- Roof lines detail -->
+  <line x1="185" y1="145" x2="215" y2="145" stroke="#22577a" stroke-width="2" />
+  <line x1="180" y1="152" x2="220" y2="152" stroke="#22577a" stroke-width="2" />
+  
+  <!-- Text elements -->
+  <text x="200" y="270" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#22577a">TravelNest</text>
+</svg>

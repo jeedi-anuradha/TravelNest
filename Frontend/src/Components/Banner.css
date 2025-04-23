@@ -1,0 +1,129 @@
+/* Banner.css */
+
+.banner {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.banner-img {
+  width: 100%;
+  height: 400px; /* Adjust as needed */
+  overflow: hidden;
+}
+
+.banner-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.search {
+  position: absolute;
+  bottom: 100px; /* Position from bottom inside banner */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  backdrop-filter: blur(5px); /* Frosted glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.search-field {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+  padding: 8px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.input-icon {
+  margin-right: 10px;
+  color: #555;
+  font-size: 18px;
+}
+
+.search-field input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 8px 0;
+  font-size: 14px;
+  outline: none;
+  color: #333;
+}
+
+.search-field input::placeholder {
+  color: #666;
+}
+
+/* Date input specific styles */
+.search-field.date input {
+  color: #666;
+}
+
+.search-field.date input:not(:placeholder-shown) {
+  color: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .banner-img {
+    height: 350px;
+  }
+  
+  .search {
+    bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner-img {
+    height: 300px;
+  }
+  
+  .search {
+    width: 94%;
+    padding: 15px;
+    bottom: 20px;
+  }
+  
+  .search-field {
+    min-width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 576px) {
+  .banner-img {
+    height: 250px;
+  }
+  
+  .search {
+    bottom: 15px;
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .search-field {
+    min-width: 100%;
+    padding: 6px 12px;
+  }
+  
+  .input-icon {
+    font-size: 16px;
+  }
+  
+  .search-field input {
+    font-size: 13px;
+  }
+}

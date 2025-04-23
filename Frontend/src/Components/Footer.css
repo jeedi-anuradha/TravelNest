@@ -1,0 +1,127 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 2rem;
+    background-color: #031d34; /* Dark blue background */
+    color: #ffffff; /* White text for contrast */
+    gap: 2rem;
+  }
+  
+  footer > div {
+    flex: 1;
+    min-width: 250px;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  footer h1 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff; /* White headings */
+  }
+  
+  footer p {
+    font-size: 0.9rem;
+    color: #a0b8d0; /* Lighter blue for secondary text */
+    margin-bottom: 1rem;
+  }
+  
+  .icons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .icons svg {
+    font-size: 1.5rem;
+    color: #ffffff; /* White icons */
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+  
+  .icons svg:hover {
+    color: #4d9fec; /* Light blue on hover */
+  }
+  
+  .newsletter-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .newsletter input {
+    padding: 0.8rem;
+    width: 200px;
+    border: 1px solid #2a4a6b;
+    border-radius: 4px;
+    background-color: #0a2a4a;
+    color: #ffffff;
+  }
+  
+  .newsletter input::placeholder {
+    color: #a0b8d0;
+  }
+  
+  .newsletter button {
+    padding: 0.8rem 1.5rem;
+    background-color: #4d9fec; /* Light blue button */
+    color: #031d34; /* Dark blue text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+    font-weight: bold;
+  }
+  
+  .newsletter button:hover {
+    background-color: #3a8bd9; /* Slightly darker blue on hover */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    footer {
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+  
+    footer > div {
+      width: 100%;
+      max-width: 350px;
+    }
+  
+    .newsletter-inputs {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .newsletter input {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  
+    .newsletter button {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    footer {
+      padding: 1.5rem;
+    }
+  
+    .icons svg {
+      font-size: 1.8rem;
+    }
+  }

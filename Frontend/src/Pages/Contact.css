@@ -1,0 +1,218 @@
+:root{
+  --primary-color:#003664;
+  --secondary-color:#b13a26;
+}/* Contact.css */
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.contact-container {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding:0;
+    width: 100%;
+  }
+  
+  /* Header with background image */
+  .contact-header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)), url('../assets/resort.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 150px;
+    margin-bottom: 40px;
+  }
+  
+  .contact-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .contact-header p {
+    font-size: 1.2rem;
+    max-width: 650px;
+    margin: 0 auto;
+    font-weight: 300;
+  }
+  
+  /* Contact form section */
+  .contact-form-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 50px;
+    padding:0px 80px;
+  }
+  
+  .contact-form-section h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    color: #333;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  
+  .contact-form {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .contact-form label {
+    display: block;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+  }
+  
+  .contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+  
+  .contact-form button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  .contact-form button:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .info-img {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .info-img img {
+    width: 100%;
+    height: 400px;
+    display: block;
+    object-fit: cover;
+    border-radius: 20px;
+  }
+  
+  /* Contact info section */
+  .contact-info-section {
+    margin-bottom: 50px;
+    padding: 0px 80px;
+  }
+  .contact-info-section h2{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    color: #333;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 40px;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    place-items: center;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .info-card {
+    padding: 30px;
+    box-shadow: 3px 4px 5px 3px var(--primary-color);
+    background-color: #ffff;
+  }
+  .info-card img{
+    padding-left:20px;
+    height: 200px;
+  }
+  .info-card h3 {
+    margin-top: 0;
+    color: #000;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  
+  .info-card p {
+    margin: 10px 0;
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  .map-container {
+    border: 1px solid #ddd;
+    margin-top: 40px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .contact-form-section {
+      padding: 0px 20px; /* Reduce padding on smaller screens */
+    }
+    .contact-header {
+      padding: 70px 20px;
+    }
+    
+    .contact-header h1 {
+      font-size: 2rem;
+    }
+    
+    .contact-header p {
+      font-size: 1rem;
+    }
+    
+    .contact-form-section h2 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .contact-info-section{
+      padding: 0px 30px;
+    }
+    .contact-header {
+      padding: 50px 15px;
+    }
+    .contact-form label{
+      font-size: 16px;
+    }
+    .contact-header h1 {
+      font-size: 1.8rem;
+    }
+    .contact-form-section {
+      padding: 0px 30px; /* Further reduce padding on mobile */
+    }
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+  }

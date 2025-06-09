@@ -1,16 +1,53 @@
-import React from 'react'
-import Header from './Components/Header'
-import Footer from './Components/Footer'
-import Banner from './Components/Banner'
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import LandingPage from "./Components/Landing/LandingPage";
+import Register from "./Components/Register/Register";
+import Login from "./Components/Login/Login";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
+import Hotels from "./Pages/Hotels";
+import HotelView from "./Pages/HotelView";
+import PopularHotels from "./Pages/PopularHotels";
+import { SearchProvider } from "./Context/SearchContext";
+import { WishlistProvider } from "./Context/WishListContext";
+import { AuthProvider } from "./Context/AuthContext";
+import { useAuth } from "./Context/AuthContext";
+import Wishlist from "./Pages/Wishlist";
+
+
+// const WishlistProviderWithUser = ({ children }) => {
+//   const { user } = useAuth();
+//   return <WishlistProvider userId={user?.id}>{children}</WishlistProvider>;
+// };
 
 const App = () => {
   return (
     <>
-    <Header/>
-    <Banner/>
-    <Footer/>
+      <ToastContainer />
+      <AuthProvider>
+      <SearchProvider>
+        <WishlistProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/popular" element={<PopularHotels />} />
+                <Route path="/city/:cityName" element={<Hotels />} />
+                <Route path="/hotel/:type" element={<HotelView />} />
+                <Route path="/wishlist" element={<Wishlist/>}/>
+              </Routes>
+            </BrowserRouter>
+        </WishlistProvider>
+      </SearchProvider>
+      </AuthProvider>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

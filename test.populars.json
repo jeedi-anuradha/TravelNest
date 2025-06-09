@@ -1,0 +1,141 @@
+[{
+  "_id": {
+    "$oid": "682319a7e4844c8eb7f3888d"
+  },
+  "id": 1,
+  "name": "Taj Falaknuma Palace",
+  "address": "Engine Bowli, Falaknuma, Hyderabad, Telangana 500053, India",
+  "images": [
+    "https://cf.bstatic.com/xdata/images/hotel/max1024x768/17181467.jpg?k=73b25a9cb3b5e18877cf578c8d146a1ba4ff213a6bf3801f4480a0337bac1b1f&o=&hp=1",
+    "https://images.jdmagicbox.com/v2/comp/hyderabad/s3/040pxx40.xx40.101106103552.y2s3/catalogue/taj-falaknuma-palace-falaknuma-hyderabad-5-star-hotels-w2d6tlo44o.jpg",
+    "https://images.blacktomato.com/2015/07/WEB-Grand-Royal-Begum-Suite.jpg"
+  ],
+  "type": "5-star",
+  "rating": 4.9,
+  "description": "A majestic palace hotel offering royal heritage stays with exquisite dining and grand interiors.",
+  "city": "Hyderabad",
+  "category": "Luxury",
+  "price": 45000,
+  "view": "City View",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68231a15da8d3f7526755e87"
+  },
+  "id": 2,
+  "name": "The Oberoi Bengaluru",
+  "address": "37-39, MG Road, Bengaluru, Karnataka 560001, India",
+  "images": [
+    "https://r1imghtlak.ibcdn.com/c498acf0e9a711e59bd0001ec9b85d13.jpg",
+    "https://r1imghtlak.mmtcdn.com/ca7289ceff1f11ea914a0242ac110003.jpg",
+    "https://images.trvl-media.com/lodging/1000000/30000/21700/21672/6ccb7486.jpg"
+  ],
+  "type": "5-star",
+  "rating": 4.8,
+  "description": "Elegant luxury hotel with impeccable service",
+  "city": "Bengaluru",
+  "category": "Luxury",
+  "price": 19000,
+  "view": "City View"
+},
+{
+  "_id": {
+    "$oid": "68231a15da8d3f7526755e88"
+  },
+  "id": 3,
+  "name": "ITC Grand Chola",
+  "address": "63, Mount Road, Guindy, Chennai 600032",
+  "images": [
+    "https://i0.wp.com/madhuonthego.com/wp-content/uploads/2019/03/cover-pic-itc-grand-chola.png",
+    "https://www.smallwood-us.com/assets/itc_grand_chola_chennai_architecture_by_srss_2_h_oVz23PmYN.jpg",
+    "https://www.kayak.ie/rimg/himg/50/2b/b6/leonardo-438996-189019832-570467.jpg"
+  ],
+  "type": "5-star",
+  "rating": 4.7,
+  "description": "Grand luxury hotel inspired by Chola dynasty architecture",
+  "city": "Chennai",
+  "category": "Luxury",
+  "price": 23000,
+  "view": "Resort view"
+},
+{
+  "_id": {
+    "$oid": "68231a15da8d3f7526755e89"
+  },
+  "id": 4,
+  "name": "The Leela Mumbai",
+  "address": "Sahar Road, Andheri East, Mumbai 400059",
+  "images": [
+    "https://api.blessingsonthenet.com/uploads/hotels/ca63537083f04615b9e6acd4c3963969-1686136060182-The-Leela-Mumbai1.jpg",
+    "https://pix10.agoda.net/hotelImages/2767/0/1e637ff665be1b388534d289d0373f14.jpg",
+    "https://images.trvl-media.com/lodging/1000000/20000/17800/17773/c42f0c34.jpg"
+  ],
+  "type": "5-star",
+  "rating": 4.6,
+  "description": "Luxury hotel with lush gardens and excellent service",
+  "city": "Mumbai",
+  "category": "Luxury",
+  "price": 19000,
+  "view": "Pool View"
+},
+{
+  "_id": {
+    "$oid": "68231a15da8d3f7526755e8a"
+  },
+  "id": 5,
+  "name": "Taj Exotica Resort & Spa",
+  "address": "Benaulim Beach, Salcette, Goa 403716",
+  "images": [
+    "https://cdn0.weddingwire.in/vendor/1702/3_2/960/jpg/23722369-720188098172529-5249068918377283858-n_15_71702.jpeg",
+    "https://r2imghtlak.ibcdn.com/r2-mmt-htl-image/htl-imgs/200706181355528188-7be1c64ca1b711ee94380a58a9feac02.jpg",
+    "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/9c/58/73/premium-sea-view-room.jpg"
+  ],
+  "type": "5-star",
+  "rating": 4.9,
+  "description": "Luxury beachfront resort with private beach and spa facilities",
+  "city": "Goa",
+  "category": "Luxury",
+  "price": 35000,
+  "view": "Beach View"
+},
+{
+  "_id": {
+    "$oid": "68231a15da8d3f7526755e8b"
+  },
+  "id": 6,
+  "name": "Taj Palace, New Delhi",
+  "address": "2, Sardar Patel Marg, Diplomatic Enclave, New Delhi, Delhi 110021, India",
+  "images": [
+    "https://imkarchitects.com/images/projects/business-hotel/taj-palace-hotel/1.jpg",
+    "https://cdn.sanity.io/images/ocl5w36p/prod4/19450b6819fce426dcc32139097cb55006bc4ea5-1280x1760.jpg",
+    "https://z.cdrst.com/foto/hotel-sf/38698/granderesp/taj-palace-new-delhi-banio-11fe184e.jpg"
+  ],
+  "type": "5-star",
+  "rating": 4.8,
+  "description": "Iconic luxury hotel with sprawling gardens and exceptional dining",
+  "city": "Delhi",
+  "category": "Luxury",
+  "price": 19000,
+  "view": "Garden View"
+},
+{
+  "_id": {
+    "$oid": "68231a15da8d3f7526755e8c"
+  },
+  "id": 7,
+  "name": "Grand Hyatt Kochi Bolgatty",
+  "address": "Bolgatty Island, Kochi, Kerala, India",
+  "images": [
+    "https://pix10.agoda.net/hotelImages/5028073/-1/6e8c1d388b148e6ed63a566d71000874.jpg",
+    "https://r1imghtlak.mmtcdn.com/7c088aee862b11eaa7320242ac110002.jpg",
+    "https://www.kayak.co.in/rimg/himg/72/8b/3a/ice-110342-62467110_3XL-455229.jpg"
+  ],
+  "type": "5-star",
+  "rating": 4.8,
+  "description": "Luxury waterfront resort with panoramic views of the backwaters",
+  "city": "Kochi",
+  "category": "Luxury",
+  "price": 15000,
+  "view": "Lake view"
+}]

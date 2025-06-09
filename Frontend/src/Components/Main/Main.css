@@ -1,0 +1,155 @@
+/* Main.css */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.heading {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  
+  .heading h2 {
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .carousel-container {
+    position: relative;
+    max-width: 1400px; /* Increased max-width */
+    margin: 0 auto;
+    padding: 0 50px; /* Increased padding */
+  }
+  
+  .popular {
+    display: flex;
+    gap: 20px; /* Increased gap */
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding: 15px 0; /* Increased padding */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .popular::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .hotels {
+    position: relative;
+    flex: 0 0 calc(25% - 15px); /* Show 4 items (25% each) */
+    min-width: 280px; /* Increased minimum width */
+    height: 320px; /* Increased height */
+    border-radius: 10px; /* Increased border radius */
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    transition: transform 0.3s ease;
+  }
+  
+  .hotels:hover {
+    transform: scale(1.05); /* Slightly larger hover effect */
+  }
+  
+  .hotels img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  
+  .hotels p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8)); /* Darker gradient */
+    color: white;
+    padding: 20px 15px 15px; /* Increased padding */
+    margin: 0;
+    font-size: 1.3rem; /* Larger font */
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45px; /* Larger arrows */
+    height: 45px;
+    border-radius: 50%;
+    background-color: white;
+    border: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1.5rem; /* Larger arrow icon */
+    cursor: pointer;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .arrow:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  .arrow.left {
+    left: 0;
+  }
+  
+  .arrow.right {
+    right: 0;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 1200px) {
+    .carousel-container {
+      max-width: 1100px;
+    }
+    
+    .hotels {
+      flex: 0 0 calc(33.33% - 15px); /* Show 3 items */
+      min-width: 240px;
+      height: 280px;
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .carousel-container {
+      padding: 0 40px;
+    }
+    
+    .hotels {
+      flex: 0 0 calc(50% - 10px); /* Show 2 items */
+      min-width: 220px;
+      height: 250px;
+    }
+    
+    .hotels p {
+      font-size: 1.2rem;
+      padding: 15px 10px 10px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .carousel-container {
+      padding: 0 30px;
+    }
+    
+    .hotels {
+      min-width: 180px;
+      height: 200px;
+    }
+    
+    .hotels p {
+      font-size: 1rem;
+      padding: 10px 8px 8px;
+    }
+    
+    .arrow {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+  }

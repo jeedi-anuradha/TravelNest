@@ -1,7 +1,8 @@
 import React from 'react'
 import { IoLocationSharp } from "react-icons/io5";
 import { IoMdPerson } from "react-icons/io";
-import banner from '../../../images/banner.jpg'
+import banner from '../../assets/banner.jpg'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './Banner.css'
 
 const Banner = () => {
@@ -23,8 +24,12 @@ const Banner = () => {
             <span className="input-icon"><IoMdPerson /></span>
             <input type="number" name="persons" placeholder="How many persons?" />
           </div>
+          <button>search</button>
         </div>
       </div>
+
+      {/* Carousel */}
+      
     </>
   )
 }

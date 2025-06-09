@@ -1,3 +1,7 @@
+:root{
+  --primary-color:#003664;
+  --secondary-color:#b13a26;
+}
 *{
   margin: 0;
   padding: 0;
@@ -49,7 +53,7 @@ footer {
   }
   
   .icons svg:hover {
-    color: #4d9fec; /* Light blue on hover */
+    color: var(--secondary-color) ; /* Light blue on hover */
   }
   
   .newsletter-inputs {
@@ -85,7 +89,7 @@ footer {
   }
   
   .newsletter button:hover {
-    background-color: #3a8bd9; /* Slightly darker blue on hover */
+    background-color: var(--secondary-color); /* Slightly darker blue on hover */
   }
   
   /* Responsive adjustments */

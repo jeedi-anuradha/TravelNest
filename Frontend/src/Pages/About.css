@@ -1,0 +1,222 @@
+:root{
+    --primary-color:#003664;
+    --secondary-color:#b13a26;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.about-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+  }
+  .fixed-back-button {
+    position: fixed;
+  top: 100px;
+  left: 10px;
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  width: 40px;
+  height: 40px;
+  overflow: visible;
+}
+
+.back-text {
+    visibility: hidden;
+    width: max-content;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* adjust this based on your layout */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+  }
+  
+  .fixed-back-button:hover {
+    background-color: var(--secondary-color);
+  }
+  .fixed-back-button:hover .back-text {
+    visibility: visible;
+  opacity: 1;
+  } 
+  .about-heading-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)), 
+                    url('../assets/resort.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    min-height:400px;
+    position: relative;
+  }
+  
+  .about-heading {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #f0f0f0;
+  }
+  
+  .about-subtext {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #f0f0f0;
+  }
+  
+  .about-features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 60px;
+  }
+  
+  .feature {
+    flex: 1 1 300px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    background-color: #ffff;
+  }
+  
+  .feature:hover {
+    transform: scale(1.01);
+  }
+  
+  .feature img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 6px;
+    margin-bottom: 20px;
+  }
+  
+  .feature h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .feature p {
+    color: #666;
+    line-height: 1.5;
+  }
+  
+  .about-why-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .why-left, .why-right {
+    flex: 1 1 400px;
+  }
+  
+  .why-left img {
+    width: 100%;
+    image-orientation: from-image;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .why-right h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .why-right ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .why-right li {
+    padding: 10px 0;
+    font-size: 1.1rem;
+    color: #555;
+    position: relative;
+    padding-left: 30px;
+  }
+  
+  .why-right li:before {
+    content: "✓";
+    color: #4CAF50;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .about-heading-section {
+      padding: 10px 15px;
+    }
+    
+    .about-heading {
+      font-size: 2rem;
+    }
+    
+    .about-subtext {
+      font-size: 1rem;
+    }
+    
+    .feature {
+      flex: 1 1 100%;
+      padding: 0px;
+    }
+    
+    .about-why-section {
+      flex-direction: column;
+    }
+    .why-left,.why-right{
+      flex:0;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .about-heading {
+      font-size: 1.8rem;
+    }
+    .feature h3 {
+      font-size: 1.3rem;
+    }
+    
+    .why-right h3 {
+      font-size: 1.5rem;
+    }
+    
+    .why-right li {
+      font-size: 1rem;
+    }
+  }

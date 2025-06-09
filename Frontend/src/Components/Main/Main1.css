@@ -1,0 +1,157 @@
+/* General reset */
+:root{
+  --primary-color:#003664;
+  --secondary-color:#b13a26;
+  --third-color:#F0F8FF;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.Toastify__toast-container {
+  z-index: 9999;
+}
+.heading {
+  text-align: center;
+  margin: 20px 0;
+}
+body{
+    background-color: #F0F8FF;
+}
+.heading h2 {
+  font-size: 2rem;
+  color: #333;
+}
+
+/* Carousel container */
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+/* Left and right scroll buttons */
+.arrow {
+  font-size: 2rem;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0 10px;
+  color: #333;
+  transition: transform 0.2s;
+}
+
+.arrow:hover {
+  transform: scale(1.1);
+}
+
+.arrow.left {
+  margin-right: 10px;
+}
+
+.arrow.right {
+  margin-left: 10px;
+}
+
+/* Scrollable hotel cards container */
+.popular {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 20px 0;
+  scrollbar-width: none; /* Firefox */
+}
+
+.popular::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Individual hotel card */
+.hotels {
+  flex: 0 0 auto;
+  width: 260px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.hotels:hover {
+  transform: translateY(-5px);
+}
+
+.hotels img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.hotels h4 {
+  font-size: 1.1rem;
+  color: #222;
+  margin: 5px 0;
+}
+
+.hotels p {
+  color: #555;
+  font-size: 0.95rem;
+  margin: 4px 0;
+}
+
+/* wish List */
+.wishlist-heart {
+  cursor: pointer;
+  font-size: 24px;
+  transition: color 0.3s ease;
+  border: none;
+  background-color: #ffff;
+}
+
+.wishlist-heart:hover {
+  transform: scale(1.1);
+}
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .hotels {
+    width: 220px;
+    padding: 12px;
+  }
+
+  .heading h2 {
+    font-size: 1.5rem;
+  }
+
+  .arrow {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    padding: 0 10px;
+  }
+
+  .hotels {
+    width: 180px;
+    padding: 10px;
+  }
+
+  .hotels img {
+    height: 140px;
+  }
+
+  .heading h2 {
+    font-size: 1.3rem;
+  }
+}

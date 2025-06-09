@@ -1,0 +1,268 @@
+/* Header.css */
+:root{
+  --primary-color:#003664;
+  --secondary-color:#b13a26;
+  --third-color:#F0F8FF;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html{
+  scroll-behavior: smooth;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 100;
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: var(--secondary-color);
+}
+
+.trips {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  justify-content: center;
+  align-items: center;
+}
+.booking-container {
+  position: relative;
+  display: inline-block;
+}
+
+.booking-text {
+  visibility: hidden;
+  width: max-content;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* adjust this based on your layout */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+
+.booking-container:hover .booking-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+.login-btn {
+  padding: 0.5rem 1.2rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: var(--secondary-color);
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 1.5rem;
+}
+.header-search {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 25px;
+  padding: 0.3rem 1rem;
+  margin: 0 1rem;
+  flex: 1;
+  max-width: 500px;
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.header-search input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.header-search input::placeholder {
+  color: #888;
+}
+
+.header-search button {
+  color: #666;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  border: none;
+}
+
+.header-search button:hover {
+  color: var(--secondary-color);
+}
+/* Wish List */
+.wishlist-count {
+  position: relative;
+  cursor: pointer;
+  font-size: 30px;
+  color:var(--primary-color);
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.wishlist-count .heart-icon {
+  position: relative;
+}
+
+.wishlist-count .badge {
+  position: absolute;
+  top: 14px;
+  right: 2px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  /* line-height: 1; */
+}
+
+/* Hover effects */
+.wishlist-count:hover .heart-icon {
+  color: var(--secondary-color);
+}
+
+/* Tablet Styles */
+@media (max-width: 992px) {
+  .header {
+    padding: 1rem;
+  }
+  
+  .nav {
+    gap: 1rem;
+  }
+}
+
+/* Mobile Menu Styles */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    z-index: 101;
+     order: 2;
+  }
+  
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    max-width: 300px;
+    height: 100vh;
+    background-color: white;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5rem 2rem;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    gap: 1.5rem;
+    order: 3;
+    /* width: 100%; */
+  }
+  
+  .nav.active {
+    right: 0;
+  }
+  
+  .trips br {
+    display: block;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1rem;
+  }
+  .search {
+    order: 1;
+    width: 100%;
+    max-width: 100%;
+    margin: 1rem 0;
+    background: white;
+    border: 1px solid #ddd;
+  }
+  .header{
+    flex-wrap: wrap;
+    padding-bottom: 0.5rem;
+  }
+  .logo{
+    order: 0;
+  }
+  .wishlist-count {
+    margin-left: 10px;
+    font-size: 20px;
+  }
+  
+  .wishlist-count .badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+    top: -6px;
+    right: -8px;
+  }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+  .logo img {
+    height: 40px;
+  }
+  
+  .nav {
+    width: 80%;
+    padding: 4rem 1.5rem;
+  }
+}

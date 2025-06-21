@@ -16,7 +16,7 @@ const HotelView = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const {addToWishlist, removeFromWishlist, isInWishlist}=useWishlist()
-  const HotelsPerPage = 6;
+  const hotelsPerPage = 6;
   const { searchQuery } = useSearch();
 
   useEffect(() => {
@@ -94,10 +94,10 @@ const HotelView = () => {
   };
 
   // Pagination Logic
-  const indexOfLast = currentPage * HotelsPerPage;
-  const indexOfFirst = indexOfLast - HotelsPerPage;
-  const currentHotels = filteredHotels.slice(indexOfFirst, indexOfLast);
-  const totalPages = Math.ceil(filteredHotels.length / HotelsPerPage);
+  const indexOfLastHotel = currentPage * hotelsPerPage;
+  const indexOfFirstHotel = indexOfLastHotel - hotelsPerPage;
+  const currentHotels = filteredHotels.slice(indexOfFirstHotel, indexOfLastHotel);
+  const totalPages = Math.ceil(filteredHotels.length / hotelsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -123,30 +123,25 @@ const HotelView = () => {
       })
     }
   }
+
   return (
     <>
       <Header />
-      <div className="popular-heading">
-        <h2 className="hotel-view-title">
-          Hotels for: {type.replace(/-/g, " ")}
-        </h2>
+      <div className="popular-heading" style={{ padding: '20px' }}>
+        <h1>Hotels for: {type.replace(/-/g, " ")}</h1>
 
         {searchQuery && (
-          <p>
-            Showing {filteredHotels.length} results for "{searchQuery}"
-          </p>
+          <p>Showing {filteredHotels.length} results for "{searchQuery}"</p>
         )}
 
-        {filteredHotels.length === 0 ? (
-          <p>No hotels found matching your search.</p>
-        ) : (
-          <div className="popular-container">
-            {currentHotels.map((hotel) => (
-              <div className="popular-hotels" key={hotel.id}>
+        <div className="popular-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+          {currentHotels.length > 0 ? (
+            currentHotels.map((hotel) => (
+              <div className="popular-hotels" key={hotel._id || hotel.name}>
                 <div className="image-gallery">
                   <img
-                    src={hotel.images[hotel.currentImageIndex || 0]}
-                    alt={hotel.name}
+                    src={hotel.images[hotel.currentImageIndex || 0] || 'https://via.placeholder.com/300x200'}
+                    alt={`${hotel.name} image`}
                   />
                   <button
                     className="nav-arrow left-arrow"
@@ -161,56 +156,50 @@ const HotelView = () => {
                     &gt;
                   </button>
                 </div>
-                <div className="hotel-info">
-                  <h4 className="hotel-name">{hotel.name}</h4>
-                  <p className="hotel-city">{hotel.city} City</p>
-                  <p>
-                    Price per night <b>₹{hotel.price}</b>
-                  </p>
-                  <p>Rating {hotel.rating}</p>
-                  <p>
-                    View:{" "}
-                    {Array.isArray(hotel.view)
-                      ? hotel.view.join(", ")
-                      : hotel.view}
-                  </p>
-                  <button>Book Now</button>
-                  <p
-                    className="wishlist-heart"
-                    style={{ color: isInWishlist(hotel.id) ? "red" : "black" }}
-                    onClick={() => toggleWishlist(hotel)}
-                  >
-                    ❤︎
-                  </p>
-                </div>
+                <p>Rating: {hotel.rating}</p>
+                <h4>{hotel.name}</h4>
+                <p>Place: {hotel.city}</p>
+                <p>Price per Night: ₹{hotel.price}</p>
+                <p>
+                  View:{" "}
+                  {Array.isArray(hotel.view)
+                    ? hotel.view.join(", ")
+                    : hotel.view}
+                </p>
+                <button>Book Now</button>
+                <p className='wishlist-heart'
+                  style={{color:isInWishlist(hotel.id) ? "red" : "black"}}
+                  onClick={()=>toggleWishlist(hotel)}
+                >❤︎</p>
               </div>
+            ))
+          ) : (
+            <p>No hotels found matching your search.</p>
+          )}
+        </div>
+
+        {filteredHotels.length > hotelsPerPage && (
+          <div style={{ textAlign: "center", margin: "20px 0" }}>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index + 1)}
+                style={{
+                  padding: "8px 12px",
+                  margin: "0 5px",
+                  backgroundColor: currentPage === index + 1 ? "#003664" : "grey",
+                  color: currentPage === index + 1 ? "white" : "black",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer"
+                }}
+              >
+                {index + 1}
+              </button>
             ))}
           </div>
         )}
       </div>
-
-      {/* Pagination buttons */}
-      {filteredHotels.length > HotelsPerPage && (
-        <div style={{ textAlign: "center", margin: "20px 0" }}>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index}
-              onClick={() => handlePageChange(index + 1)}
-              style={{
-                padding: "8px 12px",
-                margin: "0 5px",
-                backgroundColor: currentPage === index + 1 ? "#003664" : "#ccc",
-                color: currentPage === index + 1 ? "white" : "black",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
-      )}
       <Footer />
     </>
   );

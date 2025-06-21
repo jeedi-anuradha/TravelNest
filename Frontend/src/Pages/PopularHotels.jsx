@@ -63,22 +63,13 @@ const PopularHotels = () => {
   if (error) return <p>Error: {error}</p>;
 
   // Whishlist
-  const toggleWishlist=(hotel)=>{
-      if (isInWishlist(hotel.id)){
-        removeFromWishlist(hotel.id)
-        toast.success(`${hotel.name} removed from wishlist`, {
-          position: "top-right",
-          autoClose: 1000,
-        });
-      }
-      else{
-        addToWishlist(hotel)
-        toast.success(`${hotel.name} added to wishlist`, {
-          position: "top-right",
-          autoClose: 1000,
-        });
-      }
-    }
+  const toggleWishlist = async (hotel) => {
+  if (isInWishlist(hotel.id)) {
+    await removeFromWishlist(hotel.id);
+  } else {
+    await addToWishlist(hotel);
+  }
+};
 
   return (
     <>

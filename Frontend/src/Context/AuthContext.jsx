@@ -7,19 +7,24 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); // Add loading state
 
   // Check for existing user on initial load
-  useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
+ useEffect(() => {
+    const loadUser = () => {
       try {
-        setUser(JSON.parse(storedUser));
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
       } catch (error) {
         console.error('Failed to parse user data', error);
         localStorage.removeItem('user');
+      } finally {
+        setLoading(false);
       }
-    }
-    setLoading(false);
-  }, []);
+    };
 
+    loadUser();
+  }, []);
+  
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));

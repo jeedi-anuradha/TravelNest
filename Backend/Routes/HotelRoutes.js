@@ -6,6 +6,17 @@ router.get('/',async(req,res)=>{
     const data=await Hotels.find()
     res.json(data) 
 })
+router.get('/hotel/:id', async (req, res) => {
+    try {
+        const hotel = await Hotels.findById(req.params.id);
+        if (!hotel) {
+            return res.status(404).json({ message: 'Hotel not found' });
+        }
+        res.json(hotel);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 router.post('/hotels',async(req,res)=>{
     const newTodo= new Hotels(req.body)
     const saveTodo= await newTodo.save()

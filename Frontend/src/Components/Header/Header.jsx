@@ -13,14 +13,14 @@ const Header = () => {
    const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {searchQuery,setSearchQuery}=useSearch();
- const navigate= useNavigate();
- const {wishlist}=useWishlist();
+  const navigate= useNavigate();
+  const {wishlist}=useWishlist();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-   const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault()
   }
 
@@ -28,6 +28,18 @@ const Header = () => {
     logout();
     navigate('/');
   };
+
+  const handleHomeClick = (e) => {
+    if (user) {
+      e.preventDefault();
+      const confirmLogout = window.confirm("Are you sure you want to logout and go to home?");
+      if (confirmLogout) {
+        handleLogout();
+      }
+    }
+    // If no user is logged in, the default Link behavior will proceed
+  };
+
   return (
     <header className="header">
       <div className="logo">
@@ -49,21 +61,20 @@ const Header = () => {
         <button type="submit"><IoSearch /></button>
       </form>
 
-
       <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
-        <Link to="/home">Home</Link>
+        <Link to="/" onClick={handleHomeClick}>Home</Link>
         <Link to='/about'>About</Link>
         <Link to="/contact">Contact</Link>
         <div className="booking-container">
-        <Link to="/bookings" className='trips'>My Bookings</Link>
-        <span className="booking-text">Manage Your Bookings</span>
+          <Link to="/bookings" className='trips'>My Bookings</Link>
+          <span className="booking-text">Manage Your Bookings</span>
         </div>
         <div className="wishlist-count" onClick={() => navigate('/wishlist')}>
-        <span  className="heart-icon">❤︎</span>
-        {wishlist.length > 0 && (
-          <span className="badge">{wishlist.length}</span>
-        )}
-      </div>
+          <span className="heart-icon">❤︎</span>
+          {wishlist.length > 0 && (
+            <span className="badge">{wishlist.length}</span>
+          )}
+        </div>
         {user ? (
           <button className="login-btn" onClick={handleLogout}>Sign Out</button>
         ) : (

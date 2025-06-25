@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
 import './PopularHotels.css';
@@ -9,6 +10,7 @@ import { useWishlist } from '../Context/WishListContext';
 
 
 const PopularHotels = () => {
+  const navigate = useNavigate();
   const [popularHotels, setPopularHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,13 +65,23 @@ const PopularHotels = () => {
   if (error) return <p>Error: {error}</p>;
 
   // Whishlist
-  const toggleWishlist = async (hotel) => {
-  if (isInWishlist(hotel.id)) {
-    await removeFromWishlist(hotel.id);
-  } else {
-    await addToWishlist(hotel);
-  }
-};
+  // WishList
+    const toggleWishlist=(hotel)=>{
+      if(isInWishlist(hotel.id)){
+        removeFromWishlist(hotel.id)
+        toast.success(`${hotel.name} removed from wishlist`,{
+          position:'top-right',
+          autoClose:1000
+        })
+      }
+      else{
+        addToWishlist(hotel)
+        toast.success(`${hotel.name} added to wishlist`,{
+          position:"top-right",
+          autoClose:1000
+        })
+      }
+    }
 
   return (
     <>
@@ -84,7 +96,7 @@ const PopularHotels = () => {
         <div className="popular-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
           {currentHotels.length > 0 ? (
             currentHotels.map((hotel) => (
-              <div className="popular-hotels" key={hotel._id || hotel.name}>
+              <div className="popular-hotels" key={hotel._id || hotel.name} onClick={() => navigate(`/hotel-details/${hotel._id}`)}>
                 <img
                   src={hotel.images?.[0] || 'https://via.placeholder.com/300x200'}
                   alt={`${hotel.name} image`}
@@ -93,10 +105,14 @@ const PopularHotels = () => {
                 <h4>{hotel.name}</h4>
                 <p>Place: {hotel.city}</p>
                 <p>Price per Night: ₹{hotel.price}</p>
-                <button>Book Now</button>
+                <button onClick={(e)=>e.stopPropagation()}>Book Now</button>
                 <p className='wishlist-heart'
         style={{color:isInWishlist(hotel.id) ? "red" : "black"}}
-        onClick={()=>toggleWishlist(hotel)}
+        onClick={(e)=>{
+          e.stopPropagation();
+          toggleWishlist(hotel)
+        }
+          }
         >❤︎</p>
               </div>
             ))

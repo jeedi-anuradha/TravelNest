@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
+import './HotelDetails.css'
 
 const HotelDetails = () => {
   const { _id } = useParams();
+  const navigate = useNavigate();
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,6 +31,11 @@ const HotelDetails = () => {
     fetchHotelDetails();
   }, [_id]);
 
+  const handleBookNow = () => {
+    navigate(`/booking/${_id}`); // Navigate to booking page with hotel ID
+  };
+
+
   if (loading) return <div>Loading hotel details...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!hotel) return <div>Hotel not found</div>;
@@ -44,7 +51,7 @@ const HotelDetails = () => {
         <p>Price per night: ₹{hotel.price}</p>
         <p>Amenities: {hotel.amenities?.join(', ')}</p>
         <p>Description: {hotel.description}</p>
-        <button>Book Now</button>
+        <button onClick={handleBookNow}>Book Now</button>
       </div>
       <Footer />
     </>

@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSearch } from '../Context/SearchContext';
 import { useWishlist } from '../Context/WishListContext';
-
+import HotelInfoModal from './HotelInfoModal';
 
 const PopularHotels = () => {
   const navigate = useNavigate();
@@ -18,6 +18,8 @@ const PopularHotels = () => {
   const { searchQuery } = useSearch();
   const {addToWishlist, removeFromWishlist, isInWishlist}=useWishlist();
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const hotelsPerPage = 6;
 
   useEffect(() => {
@@ -64,7 +66,6 @@ const PopularHotels = () => {
   if (loading) return <p>Loading Popular Hotels...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  // Whishlist
   // WishList
     const toggleWishlist=(hotel)=>{
       if(isInWishlist(hotel.id)){
@@ -82,7 +83,18 @@ const PopularHotels = () => {
         })
       }
     }
+// Handle book now click
+  const handleBookNow = (hotel, e) => {
+    e.stopPropagation();
+    setSelectedHotel(hotel);
+    setShowModal(true);
+  }
 
+  // Handle ready to book
+  const handleReadyToBook = (hotel) => {
+    setShowModal(false);
+    navigate(`/booking/${hotel._id}`);
+  }
   return (
     <>
       <Header />
@@ -105,7 +117,7 @@ const PopularHotels = () => {
                 <h4>{hotel.name}</h4>
                 <p>Place: {hotel.city}</p>
                 <p>Price per Night: ₹{hotel.price}</p>
-                <button onClick={(e)=>e.stopPropagation()}>Book Now</button>
+                <button onClick={(e) => handleBookNow(hotel, e)}>Book Now</button>
                 <p className='wishlist-heart'
         style={{color:isInWishlist(hotel.id) ? "red" : "black"}}
         onClick={(e)=>{
@@ -143,6 +155,15 @@ const PopularHotels = () => {
           </div>
         )}
       </div>
+
+      {/* Hotel Info Modal */}
+      {showModal && selectedHotel && (
+        <HotelInfoModal 
+          hotel={selectedHotel} 
+          onClose={() => setShowModal(false)}
+          onBookNow={handleReadyToBook}
+        />
+      )}
       <Footer />
     </>
   );

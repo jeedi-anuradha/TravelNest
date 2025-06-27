@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
 import { useSearch } from '../Context/SearchContext';
 import { useWishlist } from '../Context/WishListContext';
+import HotelInfoModal from './HotelInfoModal';
 
 const Hotels = () => {
   const { cityName } = useParams();
+  const navigate = useNavigate();
   const [hotels, setHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { searchQuery } = useSearch();
-  const {addToWishlist, removeFromWishlist, isInWishlist}=useWishlist();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const HotelsPerPage = 6;
 
   useEffect(() => {
@@ -45,15 +50,11 @@ const Hotels = () => {
     const lowerCaseQuery = searchQuery.toLowerCase();
     const results = hotels.filter(hotel =>
       hotel.name.toLowerCase().includes(lowerCaseQuery) ||
-      hotel.city.toLowerCase().includes(lowerCaseQuery) 
-      // (hotel.description && hotel.description.toLowerCase().includes(lowerCaseQuery))
+      hotel.city.toLowerCase().includes(lowerCaseQuery)
     );
     setFilteredHotels(results);
     setCurrentPage(1);
   }, [searchQuery, hotels]);
-
-  if (loading) return <p>Loading Hotels for {cityName}...</p>;
-  if (error) return <p>Error: {error}</p>;
 
   // Pagination
   const indexOfLast = currentPage * HotelsPerPage;
@@ -61,31 +62,47 @@ const Hotels = () => {
   const currentHotels = filteredHotels.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(filteredHotels.length / HotelsPerPage);
 
-  const handleChange = (pageNumber) => {
+  const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
   // Wishlist
-  const toggleWishlist=(hotel)=>{
-        if (isInWishlist(hotel.id)){
-          removeFromWishlist(hotel.id)
-          toast.success(`${hotel.name} removed from wishlist`, {
-            position: "top-right",
-            autoClose: 1000,
-          });
-        }
-        else{
-          addToWishlist(hotel)
-          toast.success(`${hotel.name} added to wishlist`, {
-            position: "top-right",
-            autoClose: 1000,
-          });
-        }
-      }
+  const toggleWishlist = (hotel, e) => {
+    e.stopPropagation();
+    if (isInWishlist(hotel.id)) {
+      removeFromWishlist(hotel.id);
+      toast.success(`${hotel.name} removed from wishlist`, {
+        position: "top-right",
+        autoClose: 1000,
+      });
+    } else {
+      addToWishlist(hotel);
+      toast.success(`${hotel.name} added to wishlist`, {
+        position: "top-right",
+        autoClose: 1000,
+      });
+    }
+  };
+
+  // Handle book now click
+  const handleBookNow = (hotel, e) => {
+    e.stopPropagation();
+    setSelectedHotel(hotel);
+    setShowModal(true);
+  }
+
+  // Handle ready to book
+  const handleReadyToBook = (hotel) => {
+    setShowModal(false);
+    navigate(`/booking/${hotel._id}`);
+  }
+
+  if (loading) return <p>Loading Hotels for {cityName}...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <>
-      <Header/>
+      <Header />
       <div className="popular-heading" style={{ padding: '20px' }}>
         <h1>Featured Hotels in {cityName.charAt(0).toUpperCase() + cityName.slice(1)}</h1>
         
@@ -96,17 +113,27 @@ const Hotels = () => {
         <div className="popular-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
           {currentHotels.length > 0 ? (
             currentHotels.map((hotel) => (
-              <div key={hotel.id} className="popular-hotels">
-                <img src={hotel.images[0]} alt={hotel.name} />
+              <div 
+                key={hotel._id} 
+                className="popular-hotels"
+                onClick={() => navigate(`/hotel-details/${hotel._id}`)}
+              >
+                <img 
+                  src={hotel.images?.[0] || 'https://via.placeholder.com/300x200'} 
+                  alt={hotel.name} 
+                />
                 <p>Rating: {hotel.rating}</p>
                 <h4>{hotel.name}</h4>
                 <p>Place: {hotel.city}</p>
                 <p>Price per Night: ₹{hotel.price}</p>
-                <button>Book Now</button>
-                <p className='wishlist-heart'
-        style={{color:isInWishlist(hotel.id) ? "red" : "black"}}
-        onClick={()=>toggleWishlist(hotel)}
-        >❤︎</p>
+                <button onClick={(e) => handleBookNow(hotel, e)}>Book Now</button>
+                <p 
+                  className='wishlist-heart'
+                  style={{color: isInWishlist(hotel.id) ? "red" : "black"}}
+                  onClick={(e) => toggleWishlist(hotel, e)}
+                >
+                  ❤︎
+                </p>
               </div>
             ))
           ) : (
@@ -119,7 +146,7 @@ const Hotels = () => {
             {Array.from({ length: totalPages }, (_, index) => (
               <button
                 key={index}
-                onClick={() => handleChange(index + 1)}
+                onClick={() => handlePageChange(index + 1)}
                 style={{
                   padding: "8px 12px",
                   margin: "0 5px",
@@ -136,7 +163,17 @@ const Hotels = () => {
           </div>
         )}
       </div>
-      <Footer/>
+
+      {/* Hotel Info Modal */}
+      {showModal && selectedHotel && (
+        <HotelInfoModal 
+          hotel={selectedHotel} 
+          onClose={() => setShowModal(false)}
+          onBookNow={handleReadyToBook}
+        />
+      )}
+      
+      <Footer />
     </>
   );
 };

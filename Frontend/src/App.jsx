@@ -17,6 +17,7 @@ import { AuthProvider } from "./Context/AuthContext";
 import { useAuth } from "./Context/AuthContext";
 import Wishlist from "./Pages/Wishlist";
 import HotelDetails from "./Pages/HotelDetails";
+import BookingPage from "./Pages/Booking/BookingPage";
 
 
 // const WishlistProviderWithUser = ({ children }) => {
@@ -43,6 +44,8 @@ const App = () => {
                 <Route path="/hotel/:type" element={<HotelView />} />
                 <Route path="/wishlist" element={<Wishlist/>}/>
                 <Route path="/hotel-details/:_id" element={<HotelDetails/>} />
+                <Route path="/booking/:_id" element={<BookingPage/>} />
+
               </Routes>
             </BrowserRouter>
         </WishlistProvider>

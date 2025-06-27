@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import "./HotelView.css";
-import { toast } from "react-toastify";
-import Footer from "../Components/Footer/Footer";
-import Header from "../Components/Header/Header";
-import { useSearch } from "../Context/SearchContext";
-import { useWishlist } from "../Context/WishListContext";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom'; 
+import Header from '../Components/Header/Header';
+import Footer from '../Components/Footer/Footer';
+import './HotelView.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useSearch } from '../Context/SearchContext';
+import { useWishlist } from '../Context/WishListContext';
+import HotelInfoModal from './HotelInfoModal';
 
 const HotelView = () => {
   const { type } = useParams();
+  const navigate = useNavigate();
   const [hotels, setHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const {addToWishlist, removeFromWishlist, isInWishlist}=useWishlist()
-  const hotelsPerPage = 6;
   const { searchQuery } = useSearch();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const hotelsPerPage = 6;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,37 +66,6 @@ const HotelView = () => {
     setCurrentPage(1);
   }, [searchQuery, hotels]);
 
-  const nextImage = (hotelId) => {
-    setFilteredHotels(
-      filteredHotels.map((hotel) => {
-        if (hotel.id === hotelId) {
-          const nextIndex = (hotel.currentImageIndex || 0) + 1;
-          return {
-            ...hotel,
-            currentImageIndex: nextIndex >= hotel.images.length ? 0 : nextIndex,
-          };
-        }
-        return hotel;
-      })
-    );
-  };
-
-  const prevImage = (hotelId) => {
-    setFilteredHotels(
-      filteredHotels.map((hotel) => {
-        if (hotel.id === hotelId) {
-          const prevIndex = (hotel.currentImageIndex || 0) - 1;
-          return {
-            ...hotel,
-            currentImageIndex:
-              prevIndex < 0 ? hotel.images.length - 1 : prevIndex,
-          };
-        }
-        return hotel;
-      })
-    );
-  };
-
   // Pagination Logic
   const indexOfLastHotel = currentPage * hotelsPerPage;
   const indexOfFirstHotel = indexOfLastHotel - hotelsPerPage;
@@ -103,26 +76,39 @@ const HotelView = () => {
     setCurrentPage(pageNumber);
   };
 
+  // WishList
+  const toggleWishlist = (hotel, e) => {
+    e.stopPropagation();
+    if(isInWishlist(hotel.id)) {
+      removeFromWishlist(hotel.id);
+      toast.success(`${hotel.name} removed from wishlist`, {
+        position: 'top-right',
+        autoClose: 1000
+      });
+    } else {
+      addToWishlist(hotel);
+      toast.success(`${hotel.name} added to wishlist`, {
+        position: "top-right",
+        autoClose: 1000
+      });
+    }
+  };
+
+  // Handle book now click
+  const handleBookNow = (hotel, e) => {
+    e.stopPropagation();
+    setSelectedHotel(hotel);
+    setShowModal(true);
+  }
+
+  // Handle ready to book
+  const handleReadyToBook = (hotel) => {
+    setShowModal(false);
+    navigate(`/booking/${hotel._id}`);
+  }
+
   if (loading) return <p>Loading hotels...</p>;
   if (error) return <p>Error: {error}</p>;
-
-  // WishList
-  const toggleWishlist=(hotel)=>{
-    if(isInWishlist(hotel.id)){
-      removeFromWishlist(hotel.id)
-      toast.success(`${hotel.name} removed from wishlist`,{
-        position:'top-right',
-        autoClose:1000
-      })
-    }
-    else{
-      addToWishlist(hotel)
-      toast.success(`${hotel.name} added to wishlist`,{
-        position:"top-right",
-        autoClose:1000
-      })
-    }
-  }
 
   return (
     <>
@@ -137,25 +123,15 @@ const HotelView = () => {
         <div className="popular-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
           {currentHotels.length > 0 ? (
             currentHotels.map((hotel) => (
-              <div className="popular-hotels" key={hotel._id || hotel.name}>
-                <div className="image-gallery">
-                  <img
-                    src={hotel.images[hotel.currentImageIndex || 0] || 'https://via.placeholder.com/300x200'}
-                    alt={`${hotel.name} image`}
-                  />
-                  <button
-                    className="nav-arrow left-arrow"
-                    onClick={() => prevImage(hotel.id)}
-                  >
-                    &lt;
-                  </button>
-                  <button
-                    className="nav-arrow right-arrow"
-                    onClick={() => nextImage(hotel.id)}
-                  >
-                    &gt;
-                  </button>
-                </div>
+              <div 
+                className="popular-hotels" 
+                key={hotel._id || hotel.name}
+                onClick={() => navigate(`/hotel-details/${hotel._id}`)}
+              >
+                <img
+                  src={hotel.images?.[0] || 'https://via.placeholder.com/300x200'}
+                  alt={`${hotel.name} image`}
+                />
                 <p>Rating: {hotel.rating}</p>
                 <h4>{hotel.name}</h4>
                 <p>Place: {hotel.city}</p>
@@ -166,11 +142,14 @@ const HotelView = () => {
                     ? hotel.view.join(", ")
                     : hotel.view}
                 </p>
-                <button>Book Now</button>
-                <p className='wishlist-heart'
-                  style={{color:isInWishlist(hotel.id) ? "red" : "black"}}
-                  onClick={()=>toggleWishlist(hotel)}
-                >❤︎</p>
+                <button onClick={(e) => handleBookNow(hotel, e)}>Book Now</button>
+                <p 
+                  className='wishlist-heart'
+                  style={{color: isInWishlist(hotel.id) ? "red" : "black"}}
+                  onClick={(e) => toggleWishlist(hotel, e)}
+                >
+                  ❤︎
+                </p>
               </div>
             ))
           ) : (
@@ -200,6 +179,17 @@ const HotelView = () => {
           </div>
         )}
       </div>
+
+      {/* Hotel Info Modal */}
+      {showModal && selectedHotel && (
+        <HotelInfoModal 
+          hotel={selectedHotel} 
+          onClose={() => setShowModal(false)}
+          onBookNow={handleReadyToBook}
+        />
+      )}
+      
+      <ToastContainer />
       <Footer />
     </>
   );

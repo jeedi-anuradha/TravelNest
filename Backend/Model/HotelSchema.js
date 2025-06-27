@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const HotelSchema =new mongoose.Schema({
+const HotelSchema = new mongoose.Schema({
   id: { type: Number, required: true, unique: true },
   name: {
     type: String,
@@ -59,7 +59,75 @@ const HotelSchema =new mongoose.Schema({
       "Mountain View"
     ],
     required: true
-  }
+  },
+  roomsAvailable: {
+    guests: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+    bedrooms: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+    beds: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+    bathroomsNumber: {
+      type: Number,
+      required: true,
+      min: 1
+    }
+  },
+  amenities: {
+    type: [String],
+    enum: [
+      "Free WiFi",
+      "Swimming Pool",
+      "Fitness Center",
+      "Spa",
+      "Restaurant",
+      "Room Service",
+      "Air Conditioning",
+      "Parking",
+      "Laundry Service",
+      "Business Center",
+      "Concierge",
+      "24-Hour Front Desk",
+      "Bar/Lounge",
+      "Airport Shuttle",
+      "Family Rooms",
+      "Pet Friendly",
+      "Non-Smoking Rooms",
+      "Elevator",
+      "Meeting Rooms",
+      "Wheelchair Accessible"
+    ],
+    default: []
+  },
+  location: {
+        country: {
+            type: {}
+        },
+        addressLineOne: {
+            type: String
+        },
+        addressLineTwo: {
+            type: String
+        },
+        city: {
+            type: {}
+        },
+        state: {
+            type: {},
+        },
+        postCode: {
+            type: String
+        }
+    }
 }, {
   timestamps: true
 });

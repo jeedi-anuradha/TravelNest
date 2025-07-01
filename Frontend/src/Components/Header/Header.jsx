@@ -6,7 +6,7 @@ import { ImMenu } from "react-icons/im";
 import { IoClose } from "react-icons/io5";
 import { IoSearch } from "react-icons/io5";
 import { useSearch } from '../../Context/SearchContext';
-import { useWishlist } from '../../Context/WishListContext';
+import { useWishlist } from '../../Context/WishlistContext';
 import { useAuth } from '../../Context/AuthContext';
 
 const Header = () => {
@@ -25,20 +25,24 @@ const Header = () => {
   }
 
   const handleLogout = () => {
-    logout();
+    const confirmLogout = window.confirm("Are you sure you want to logout and go to home?");
+      if (confirmLogout) {
+        logout();
     navigate('/');
+      }
+    
   };
 
-  const handleHomeClick = (e) => {
-    if (user) {
-      e.preventDefault();
-      const confirmLogout = window.confirm("Are you sure you want to logout and go to home?");
-      if (confirmLogout) {
-        handleLogout();
-      }
-    }
-    // If no user is logged in, the default Link behavior will proceed
-  };
+  // const handleHomeClick = (e) => {
+  //   if (user) {
+  //     e.preventDefault();
+  //     const confirmLogout = window.confirm("Are you sure you want to logout and go to home?");
+  //     if (confirmLogout) {
+  //       handleLogout();
+  //     }
+  //   }
+  //   // If no user is logged in, the default Link behavior will proceed
+  // };
 
   return (
     <header className="header">
@@ -62,11 +66,11 @@ const Header = () => {
       </form>
 
       <nav className={`nav ${isMenuOpen ? 'active' : ''}`}>
-        <Link to="/" onClick={handleHomeClick}>Home</Link>
+        <Link to="/">Home</Link>
         <Link to='/about'>About</Link>
         <Link to="/contact">Contact</Link>
         <div className="booking-container">
-          <Link to="/bookings" className='trips'>My Bookings</Link>
+          <Link to="/my-bookings" className='trips'>My Bookings</Link>
           <span className="booking-text">Manage Your Bookings</span>
         </div>
         <div className="wishlist-count" onClick={() => navigate('/wishlist')}>

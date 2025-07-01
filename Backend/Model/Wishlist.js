@@ -18,4 +18,7 @@ userId: {
     default: Date.now
   }
 })
+
+ wishList.index({ userId: 1, 'hotel.id': 1 }, { unique: true });
+
 module.exports=mongoose.model("Wishlist",wishList)

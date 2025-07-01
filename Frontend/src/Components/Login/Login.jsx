@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -14,6 +14,16 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
+  const location=useLocation()
+
+  // Handle redirect back to previous page (like booking confirmation)
+  const redirectPath = location.state?.from || "/";
+const redirectState = location.state?.hotel && location.state?.bookingDetails
+  ? {
+      hotel: location.state.hotel,
+      bookingDetails: location.state.bookingDetails,
+    }
+  : null;
 
   const validateForm = () => {
     let valid = true;
@@ -51,51 +61,47 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
+  e.preventDefault();
 
-    try {
-      const checkUser = await axios.post(
-        "http://localhost:3001/login",
-        userData
-      );
-      console.log("63",checkUser)
-      if (checkUser.data.success) {
-        login(checkUser.data.user)
-        toast.success(`${checkUser.data.user.username} Login successful!`, {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        // Navigate after the toast is shown
+  if (!validateForm()) {
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      "http://localhost:3001/login",
+      userData
+    );
+
+    if (response.data.success) {
+      login(response.data.user, response.data.token);
+      localStorage.setItem("token", response.data.token);
+
+      toast.success(`${response.data.user.username} Login successful!`, {
+        position: "top-right",
+        autoClose: 3000,
+      });
+
         setTimeout(() => {
-          navigate("/");
-        }, 3000);
+  if (redirectState) {
+    navigate(redirectPath, { state: redirectState });
+  } else {
+    navigate(redirectPath);
+  }
+}, 3000);
       }
-    } catch (error) {
-      toast.error(
-        error.response?.data?.message || 
-        "Login failed. Please check your credentials.", 
-        {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        }
-      );
-      console.log(error);
-    }
-  };
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || 
+      "Login failed. Please check your credentials.", 
+      {
+        position: "top-right",
+        autoClose: 3000,
+      }
+    );
+  }
+};
+
 
   const handleClick = () => {
     navigate("/register");

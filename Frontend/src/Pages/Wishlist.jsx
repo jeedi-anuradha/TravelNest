@@ -56,7 +56,7 @@ const Wishlist = () => {
                 <h3>{hotel.name}</h3>
                 <p>{hotel.city}</p>
                 <p>Rating: {hotel.rating || 'Not rated'}</p>
-                <p>Price: ${hotel.price?.toLocaleString() || '0'} per night</p>
+                <p>Price: ₹{hotel.price?.toLocaleString() || '0'} per night</p>
                 <button 
                   onClick={() => handleRemove(hotel)}
                   className="remove-btn"

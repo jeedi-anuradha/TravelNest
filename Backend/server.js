@@ -8,6 +8,7 @@ const userRoutes=require('./Routes/AuthRoute')
 const HotelRoutes=require('./Routes/HotelRoutes')
 const PopularRoutes=require('./Routes/Popular')
 const wishlistRoutes=require('./Routes/wishlist')
+const bookingRoutes=require('./Routes/booking')
 
 
 const port=process.env.PORT
@@ -26,6 +27,7 @@ app.use('/',userRoutes)
 app.use('/',HotelRoutes)
 app.use('/',PopularRoutes)
 app.use('/', wishlistRoutes)
+app.use('/',bookingRoutes)
 
 app.listen(port,()=>{
     console.log(`server is running on http://localhost:${port}`)

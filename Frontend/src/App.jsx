@@ -18,6 +18,7 @@ import { useAuth } from "./Context/AuthContext";
 import Wishlist from "./Pages/Wishlist";
 import HotelDetails from "./Pages/HotelDetails";
 import BookingPage from "./Pages/Booking/BookingPage";
+import MyBookings from "./Components/MyBookings/MyBookings";
 
 
 // const WishlistProviderWithUser = ({ children }) => {
@@ -28,10 +29,11 @@ import BookingPage from "./Pages/Booking/BookingPage";
 const App = () => {
   return (
     <>
-      <ToastContainer />
+      
       <AuthProvider>
       <SearchProvider>
         <WishlistProvider>
+          <ToastContainer />
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
@@ -39,6 +41,7 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path='/my-bookings' element={<MyBookings/>}/>
                 <Route path="/popular" element={<PopularHotels />} />
                 <Route path="/city/:cityName" element={<Hotels />} />
                 <Route path="/hotel/:type" element={<HotelView />} />

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
@@ -9,6 +10,7 @@ const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate=useNavigate()
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -16,6 +18,7 @@ const MyBookings = () => {
         const res = await fetch(`http://localhost:3001/bookings/${user._id}`);
         if (!res.ok) throw new Error('Failed to fetch bookings');
         const data = await res.json();
+        console.log("booking",data)
         setBookings(data);
       } catch (err) {
         console.error('Fetch error:', err);
@@ -55,6 +58,9 @@ const MyBookings = () => {
     }
   };
 
+const handleImageClick = (hotelId) => {
+    navigate(`/hotel-details/${hotelId}`);
+  };
 
   if (loading) return <p>Loading your bookings...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -69,6 +75,7 @@ const MyBookings = () => {
         <div className="booking-list">
           {bookings.map((booking) => (
             <div key={booking._id} className="booking-card">
+              <img src={booking.hotel?.images[0]} alt={booking.hotel?.name} onClick={() => handleImageClick(booking.hotel?._id)}/>
               <h3>{booking.hotel?.name}</h3>
               <p><strong>Location:</strong> {booking.hotel?.city}</p>
               <p><strong>Check-in:</strong> {new Date(booking.checkIn).toLocaleDateString()}</p>

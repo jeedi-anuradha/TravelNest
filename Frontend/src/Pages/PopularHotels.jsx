@@ -108,7 +108,7 @@ const PopularHotels = () => {
         <div className="popular-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
           {currentHotels.length > 0 ? (
             currentHotels.map((hotel) => (
-              <div className="popular-hotels" key={hotel._id || hotel.name} onClick={() => navigate(`/hotel-details/${hotel._id}`)}>
+              <div className="popular-hotels" key={hotel._id || hotel.name} onClick={() => navigate(`/hotel-details/${hotel._id || hotel.name}`)}>
                 <img
                   src={hotel.images?.[0] || 'https://via.placeholder.com/300x200'}
                   alt={`${hotel.name} image`}

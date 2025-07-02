@@ -15,7 +15,7 @@ const HotelDetails = () => {
     const fetchHotelDetails = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:3001/hotel/${_id}`);
+        const response = await fetch(`http://localhost:3001/id/${_id}`);
         if (!response.ok) throw new Error('Hotel not found');
         const data = await response.json();
         console.log("Received data",data)

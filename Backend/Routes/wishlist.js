@@ -23,31 +23,42 @@ router.get('/wishlist/:userId', async (req, res) => {
   }
 });
 
-// ✅ Add a hotel to wishlist
+// When adding to wishlist
 router.post('/wishlist/post', async (req, res) => {
   try {
     const { userId, hotel } = req.body;
 
-    if (!userId || !hotel || !hotel.id) {
-      return res.status(400).json({ message: 'User ID and hotel with ID are required' });
+    // Ensure hotel has _id
+    if (!hotel._id) {
+      return res.status(400).json({ message: 'Hotel _id is required' });
     }
 
-    // Prevent duplicate for same user
+    // Prevent duplicate
     const existingItem = await Wishlist.findOne({
       userId,
-      'hotel.id': hotel.id
+      'hotel._id': hotel._id
     });
 
     if (existingItem) {
       return res.status(400).json({ message: 'Hotel already in wishlist' });
     }
 
-    const newItem = new Wishlist({ userId, hotel });
+    const newItem = new Wishlist({ 
+      userId, 
+      hotel: {
+        _id: hotel._id,  // Make sure to include this
+        id: hotel.id,
+        name: hotel.name,
+        city: hotel.city,
+        price: hotel.price,
+        rating: hotel.rating,
+        images: hotel.images
+      }
+    });
     await newItem.save();
 
     res.status(201).json(newItem);
   } catch (error) {
-    console.error('Error adding to wishlist:', error.message);
     res.status(500).json({ message: 'Server error' });
   }
 });

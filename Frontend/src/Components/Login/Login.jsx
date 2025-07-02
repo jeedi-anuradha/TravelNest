@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate,useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -14,22 +14,21 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
-  const location=useLocation()
+  const location = useLocation();
 
-  // Handle redirect back to previous page (like booking confirmation)
-  const redirectPath = location.state?.from || "/";
-const redirectState = location.state?.hotel && location.state?.bookingDetails
-  ? {
-      hotel: location.state.hotel,
-      bookingDetails: location.state.bookingDetails,
-    }
-  : null;
+  // This line remains exactly the same - it already handles both cases
+  const redirectPath = location.state?.from || "/my-bookings";
+  const redirectState = location.state?.hotel && location.state?.bookingDetails
+    ? {
+        hotel: location.state.hotel,
+        bookingDetails: location.state.bookingDetails,
+      }
+    : null;
 
   const validateForm = () => {
     let valid = true;
     const newErrors = { email: "", password: "" };
 
-    // Email validation
     if (!userData.email) {
       newErrors.email = "Email is required";
       valid = false;
@@ -38,7 +37,6 @@ const redirectState = location.state?.hotel && location.state?.bookingDetails
       valid = false;
     }
 
-    // Password validation
     if (!userData.password) {
       newErrors.password = "Password is required";
       valid = false;
@@ -54,54 +52,52 @@ const redirectState = location.state?.hotel && location.state?.bookingDetails
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: "" });
     }
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!validateForm()) {
-    return;
-  }
+    if (!validateForm()) {
+      return;
+    }
 
-  try {
-    const response = await axios.post(
-      "http://localhost:3001/login",
-      userData
-    );
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/login",
+        userData
+      );
 
-    if (response.data.success) {
-      login(response.data.user, response.data.token);
-      localStorage.setItem("token", response.data.token);
+      if (response.data.success) {
+        login(response.data.user, response.data.token);
+        localStorage.setItem("token", response.data.token);
 
-      toast.success(`${response.data.user.username} Login successful!`, {
-        position: "top-right",
-        autoClose: 3000,
-      });
+        toast.success(`${response.data.user.username} Login successful!`, {
+          position: "top-right",
+          autoClose: 3000,
+        });
 
         setTimeout(() => {
-  if (redirectState) {
-    navigate(redirectPath, { state: redirectState });
-  } else {
-    navigate(redirectPath);
-  }
-}, 3000);
+          if (redirectState) {
+            navigate(redirectPath, { state: redirectState });
+          } else {
+            navigate(redirectPath); // This will handle both wishlist and my-bookings
+          }
+        }, 3000);
       }
-  } catch (error) {
-    toast.error(
-      error.response?.data?.message || 
-      "Login failed. Please check your credentials.", 
-      {
-        position: "top-right",
-        autoClose: 3000,
-      }
-    );
-  }
-};
-
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || 
+        "Login failed. Please check your credentials.", 
+        {
+          position: "top-right",
+          autoClose: 3000,
+        }
+      );
+    }
+  };
 
   const handleClick = () => {
     navigate("/register");
@@ -113,7 +109,6 @@ const redirectState = location.state?.hotel && location.state?.bookingDetails
 
   return (
     <div className="login-page">
-      {/* <ToastContainer /> */}
       <div className="img-container"></div>
       <div className="login-container">
         <h2>Login</h2>

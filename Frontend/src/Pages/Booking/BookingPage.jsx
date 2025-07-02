@@ -43,7 +43,7 @@ const BookingPage = () => {
     const fetchHotel = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:3001/hotel/${_id}`);
+        const res = await fetch(`http://localhost:3001/id/${_id}`);
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(errorData.message || 'Failed to fetch hotel data');

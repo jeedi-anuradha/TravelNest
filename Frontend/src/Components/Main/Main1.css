@@ -14,12 +14,13 @@
 }
 .heading {
   text-align: center;
-  margin: 20px 0;
+  margin: 20px 0px;
 }
 body{
     background-color: #F0F8FF;
 }
 .heading h2 {
+   /* margin-left: 80px; */
   font-size: 2rem;
   color: #333;
 }
@@ -139,7 +140,7 @@ body{
 
 @media (max-width: 480px) {
   .carousel-container {
-    padding: 0 10px;
+    padding: 0 0px;
   }
 
   .hotels {

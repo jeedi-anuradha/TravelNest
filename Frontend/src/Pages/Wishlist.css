@@ -1,4 +1,14 @@
 /* Wishlist.css */
+:root{
+  --primary-color:#003664;
+  --secondary-color:#b13a26;
+  --third-color:#F0F8FF;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .wishlist-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -8,7 +18,7 @@
 
 .wishlist-container h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin: 20px 0px;
   color: #333;
   font-size: 2rem;
 }
@@ -73,7 +83,7 @@
   width: 100%;
   padding: 10px;
   margin-top: 15px;
-  background-color: #ff4444;
+  background-color: var(--secondary-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -83,7 +93,7 @@
 }
 
 .remove-btn:hover {
-  background-color: #cc0000;
+  background-color:  #8c2e1e;
 }
 
 /* Responsive adjustments */

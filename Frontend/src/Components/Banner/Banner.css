@@ -237,27 +237,31 @@
   }
   
   .fixed-search-form {
-    width: 95%;
-    top: 60%;
+    width: 60%;
+    top: 50%;
   }
   
   .search {
     flex-direction: column;
-    gap: 10px;
-    padding: 15px;
+    gap: 5px;
+    padding: 5px;
   }
   
   .search-field {
     min-width: 100%;
-    padding: 8px 12px;
+    padding: 5px 5px;
   }
   
   .input-icon {
-    font-size: 16px;
+    font-size: 12px;
   }
   
   .carousel-control-prev,
   .carousel-control-next {
     width: 12%;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    font-size: 12px; /* Smaller size for mobile */
   }
 }

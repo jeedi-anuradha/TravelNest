@@ -3,6 +3,8 @@ import { useWishlist } from '../Context/WishlistContext';
 import { useAuth } from '../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Header from '../Components/Header/Header';
+import Footer from '../Components/Footer/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 import './Wishlist.css';
 
@@ -19,6 +21,7 @@ const Wishlist = () => {
 
   const handleRemove = async (hotel) => {
     try {
+      console.log("wishlist",hotel)
       await removeFromWishlist(hotel.id);
       toast.success(`${hotel.name} removed from wishlist`, {
         position: "top-right",
@@ -38,7 +41,15 @@ const Wishlist = () => {
     }
   };
 
+   const handleImageClick = (hotel) => {
+    // Use _id if available, otherwise fall back to name
+    const identifier = hotel._id ? hotel._id : encodeURIComponent(hotel.name);
+  navigate(`/hotel-details/${identifier}`);
+  };
+
   return (
+    <>
+    <Header/>
     <div className="wishlist-container">
       <h2>Your Wishlist</h2>
       {wishlist.length === 0 ? (
@@ -50,7 +61,7 @@ const Wishlist = () => {
               <img 
                 src={hotel.images?.[0] || 'https://via.placeholder.com/300x200'} 
                 alt={hotel.name} 
-                onClick={() => navigate(`/hotel/${hotel.id}`)}
+                onClick={() => handleImageClick(hotel)}
               />
               <div className="hotel-info">
                 <h3>{hotel.name}</h3>
@@ -69,6 +80,8 @@ const Wishlist = () => {
         </div>
       )}
     </div>
+    <Footer/>
+    </>
   );
 };
 

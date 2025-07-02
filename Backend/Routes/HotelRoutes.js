@@ -2,10 +2,16 @@ const express=require('express')
 const router=express.Router()
 const Hotels=require('../Model/HotelSchema')
 
-router.get('/',async(req,res)=>{
-    const data=await Hotels.find()
-    res.json(data) 
-})
+router.get('/', async (req, res) => {
+    try {
+        const data = await Hotels.find().maxTimeMS(10000); // Add timeout to query
+        res.json(data);
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ error: 'Database operation failed' });
+    }
+});
+
 router.get('/id/:id', async (req, res) => {
     try {
         const hotel = await Hotels.findById(req.params.id);

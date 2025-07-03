@@ -15,7 +15,7 @@ const MyBookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/bookings/${user._id}`);
+        const res = await fetch(`https://travelnest-3.onrender.com/api/booking/bookings/${user._id}`);
         if (!res.ok) throw new Error('Failed to fetch bookings');
         const data = await res.json();
         console.log("booking",data)

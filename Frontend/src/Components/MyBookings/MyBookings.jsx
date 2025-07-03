@@ -39,7 +39,7 @@ const MyBookings = () => {
     if (!confirmDelete) return;
 
     try {
-      const res = await fetch(`http://localhost:3001/bookings/${bookingId}`, {
+      const res = await fetch(`https://travelnest-3.onrender.com/api/booking/bookings/${bookingId}`, {
         method: 'DELETE'
       });
 

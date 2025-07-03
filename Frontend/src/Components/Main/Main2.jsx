@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useWishlist } from '../../Context/WishListContext';
+import { useWishlist } from '../../Context/WishlistContext';
 
 
 const Main2 = () => {
@@ -16,7 +16,7 @@ const Main2 = () => {
     useEffect(()=>{
       const fetchData=async()=>{
         try {
-          const res=await fetch('http://localhost:3001/')
+          const res=await fetch('https://travelnest-3.onrender.com/api/hotels')
           const data=await res.json()
           // console.log(data)
           const uniqueCityHotels = [];

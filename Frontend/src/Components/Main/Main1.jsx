@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useWishlist } from "../../Context/WishListContext";
+import { useWishlist } from "../../Context/WishlistContext";
 
 const Main = () => {
   const [popularHotels, setPopularHotels] = useState([]);
@@ -13,7 +13,7 @@ const Main = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:3001/popular");
+        const res = await fetch("https://travelnest-3.onrender.com/api/popular/popular");
         const data = await res.json();
         // console.log(data)
         setPopularHotels(data);

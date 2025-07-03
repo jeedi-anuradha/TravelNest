@@ -5,8 +5,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
 import { useSearch } from '../Context/SearchContext';
-import { useWishlist } from '../Context/WishListContext';
+import { useWishlist } from '../Context/WishlistContext';
 import HotelInfoModal from './HotelInfoModal';
+import Lottie from 'lottie-react';
+import Loader from '../Components/Loaders/hotel.json';
+import Error from '../Components/Loaders/Error.json';
 
 const Hotels = () => {
   const { cityName } = useParams();
@@ -28,10 +31,10 @@ const Hotels = () => {
         setLoading(true);
         setError(null);
 
-        const res = await fetch('http://localhost:3001/');
+        const res = await fetch('https://travelnest-3.onrender.com/api/hotels');
         if (!res.ok) throw new Error('Failed to fetch data');
         const data = await res.json();
-        const hotelCity = data.filter(hotel => 
+        const hotelCity = data.filter(hotel =>
           hotel.city.toLowerCase() === cityName.toLowerCase()
         );
         setHotels(hotelCity);
@@ -56,7 +59,6 @@ const Hotels = () => {
     setCurrentPage(1);
   }, [searchQuery, hotels]);
 
-  // Pagination
   const indexOfLast = currentPage * HotelsPerPage;
   const indexOfFirst = indexOfLast - HotelsPerPage;
   const currentHotels = filteredHotels.slice(indexOfFirst, indexOfLast);
@@ -66,7 +68,6 @@ const Hotels = () => {
     setCurrentPage(pageNumber);
   };
 
-  // Wishlist
   const toggleWishlist = (hotel, e) => {
     e.stopPropagation();
     if (isInWishlist(hotel.id)) {
@@ -84,87 +85,110 @@ const Hotels = () => {
     }
   };
 
-  // Handle book now click
   const handleBookNow = (hotel, e) => {
     e.stopPropagation();
     setSelectedHotel(hotel);
     setShowModal(true);
-  }
+  };
 
-  // Handle ready to book
   const handleReadyToBook = (hotel) => {
     setShowModal(false);
     navigate(`/booking/${hotel._id}`);
-  }
-
-  if (loading) return <p>Loading Hotels for {cityName}...</p>;
-  if (error) return <p>Error: {error}</p>;
+  };
 
   return (
     <>
       <Header />
-      <div className="popular-heading" style={{ padding: '20px' }}>
-        <h1>Featured Hotels in {cityName.charAt(0).toUpperCase() + cityName.slice(1)}</h1>
-        
-        {searchQuery && (
-          <p>Showing {filteredHotels.length} results for "{searchQuery}"</p>
-        )}
 
-        <div className="popular-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-          {currentHotels.length > 0 ? (
-            currentHotels.map((hotel) => (
-              <div 
-                key={hotel._id} 
-                className="popular-hotels"
-                onClick={() => navigate(`/hotel-details/${hotel._id}`)}
-              >
-                <img 
-                  src={hotel.images?.[0] || 'https://via.placeholder.com/300x200'} 
-                  alt={hotel.name} 
-                />
-                <p>Rating: {hotel.rating}</p>
-                <h4>{hotel.name}</h4>
-                <p>Place: {hotel.city}</p>
-                <p>Price per Night: ₹{hotel.price}</p>
-                <button onClick={(e) => handleBookNow(hotel, e)}>Book Now</button>
-                <p 
-                  className='wishlist-heart'
-                  style={{color: isInWishlist(hotel.id) ? "red" : "black"}}
-                  onClick={(e) => toggleWishlist(hotel, e)}
+      {loading ? (
+  <div className="popular-loader-container">
+    <Lottie 
+      animationData={Loader}
+      loop
+      autoplay
+      style={{ width: 300, height: 300 }}
+    />
+  </div>
+) : error ? (
+  <div className="popular-error-container">
+    <div className="popular-error-message">
+      <p>Failed to fetch hotels for {cityName}</p>
+    </div>
+    <div className="popular-error-loader">
+      <Lottie 
+        animationData={Error}
+        loop
+        autoplay
+        style={{ width: 200, height: 200 }}
+      />
+    </div>
+  </div>
+) : (
+        <div className="popular-heading" style={{ padding: '20px' }}>
+          <h1>
+            Featured Hotels in{' '}
+            {cityName.charAt(0).toUpperCase() + cityName.slice(1)}
+          </h1>
+          
+          {searchQuery && (
+            <p>Showing {filteredHotels.length} results for "{searchQuery}"</p>
+          )}
+
+          <div className="popular-container" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+            {currentHotels.length > 0 ? (
+              currentHotels.map((hotel) => (
+                <div 
+                  key={hotel._id} 
+                  className="popular-hotels"
+                  onClick={() => navigate(`/hotel-details/${hotel._id}`)}
                 >
-                  ❤︎
-                </p>
-              </div>
-            ))
-          ) : (
-            <p>No hotels found matching your search.</p>
+                  <img 
+                    src={hotel.images?.[0] || 'https://via.placeholder.com/300x200'} 
+                    alt={hotel.name} 
+                  />
+                  <p>Rating: {hotel.rating}</p>
+                  <h4>{hotel.name}</h4>
+                  <p>Place: {hotel.city}</p>
+                  <p>Price per Night: ₹{hotel.price}</p>
+                  <button onClick={(e) => handleBookNow(hotel, e)}>Book Now</button>
+                  <p 
+                    className='wishlist-heart'
+                    style={{ color: isInWishlist(hotel.id) ? "red" : "black" }}
+                    onClick={(e) => toggleWishlist(hotel, e)}
+                  >
+                    ❤︎
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>No hotels found matching your search.</p>
+            )}
+          </div>
+
+          {filteredHotels.length > HotelsPerPage && (
+            <div style={{ textAlign: "center", margin: "20px 0" }}>
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                  style={{
+                    padding: "8px 12px",
+                    margin: "0 5px",
+                    backgroundColor: currentPage === index + 1 ? "#003664" : "grey",
+                    color: currentPage === index + 1 ? "white" : "black",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer"
+                  }}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
           )}
         </div>
+      )}
 
-        {filteredHotels.length > HotelsPerPage && (
-          <div style={{ textAlign: "center", margin: "20px 0" }}>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => handlePageChange(index + 1)}
-                style={{
-                  padding: "8px 12px",
-                  margin: "0 5px",
-                  backgroundColor: currentPage === index + 1 ? "#003664" : "grey",
-                  color: currentPage === index + 1 ? "white" : "black",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer"
-                }}
-              >
-                {index + 1}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Hotel Info Modal */}
       {showModal && selectedHotel && (
         <HotelInfoModal 
           hotel={selectedHotel} 
@@ -172,7 +196,7 @@ const Hotels = () => {
           onBookNow={handleReadyToBook}
         />
       )}
-      
+
       <Footer />
     </>
   );

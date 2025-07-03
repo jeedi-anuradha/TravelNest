@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Header from '../Components/Header/Header';
 import Footer from '../Components/Footer/Footer';
-import './HotelDetails.css'
+import Lottie from 'lottie-react';
+import Loader from '../Components/Loaders/hotel.json';
+import Error from '../Components/Loaders/Error.json';
+import './HotelDetails.css';
 
 const HotelDetails = () => {
   const { _id } = useParams();
@@ -15,13 +18,12 @@ const HotelDetails = () => {
     const fetchHotelDetails = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:3001/id/${_id}`);
+        const response = await fetch(`https://travelnest-3.onrender.com/api/hotels/id/${_id}`);
         if (!response.ok) throw new Error('Hotel not found');
         const data = await response.json();
-        console.log("Received data",data)
         setHotel(data);
       } catch (err) {
-        console.log('error fetching data',err.message)
+        console.error('Error fetching hotel details:', err.message);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -32,13 +34,59 @@ const HotelDetails = () => {
   }, [_id]);
 
   const handleBookNow = () => {
-    navigate(`/booking/${_id}`); // Navigate to booking page with hotel ID
+    navigate(`/booking/${_id}`);
   };
 
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="hotel-loader-container">
+          <Lottie
+            animationData={Loader}
+            loop
+            autoplay
+            style={{ width: 300, height: 300 }}
+          />
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
-  if (loading) return <div>Loading hotel details...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!hotel) return <div>Hotel not found</div>;
+  if (error) {
+    return (
+      <>
+        <Header />
+        <div className="hotel-error-container">
+          <div className="hotel-error-message">
+            <p>Failed to load hotel details.</p>
+            {/* <p> {error}</p> */}
+            <button onClick={() => window.location.reload()}>Try Again</button>
+          </div>
+          <Lottie
+            animationData={Error}
+            loop
+            autoplay
+            style={{ width: 200, height: 200 }}
+          />
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (!hotel) {
+    return (
+      <>
+        <Header />
+        <div className="hotel-error-container">
+          <p>Hotel not found</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
@@ -46,11 +94,11 @@ const HotelDetails = () => {
       <div className="hotel-details-container">
         <h1>{hotel.name}</h1>
         <img src={hotel.images?.[0]} alt={hotel.name} />
-        <p>Location: {hotel.city}</p>
-        <p>Rating: {hotel.rating}</p>
-        <p>Price per night: ₹{hotel.price}</p>
-        <p>Amenities: {hotel.amenities?.join(', ')}</p>
-        <p>Description: {hotel.description}</p>
+        <p><strong>Location:</strong> {hotel.city}</p>
+        <p><strong>Rating:</strong> {hotel.rating} ★</p>
+        <p><strong>Price per night:</strong> ₹{hotel.price}</p>
+        <p><strong>Amenities:</strong> {hotel.amenities?.join(', ')}</p>
+        <p><strong>Description:</strong> {hotel.description}</p>
         <button onClick={handleBookNow}>Book Now</button>
       </div>
       <Footer />

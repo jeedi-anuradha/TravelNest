@@ -22,7 +22,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const users = await axios.post(
-        "http://localhost:3001/signup",
+        "https://travelnest-3.onrender.com/api/auth/signup",
         userData
       );
       console.log(users);

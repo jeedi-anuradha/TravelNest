@@ -46,6 +46,43 @@
 .hotel-details-container button:hover{
     background-color: var(--secondary-color);
 }
+/* Loader styles */
+.hotel-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.hotel-error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  text-align: center;
+}
+
+.hotel-error-message p {
+  font-size: 1.2rem;
+  color: #b13a26;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.hotel-error-message button {
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hotel-error-message button:hover {
+  background-color: var(--secondary-color);
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .hotel-details-container h1 {

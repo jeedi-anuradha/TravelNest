@@ -1,3 +1,13 @@
+:root{
+  --primary-color:#003664;
+  --secondary-color:#b13a26;
+  --third-color:#F0F8FF;
+}
+*{
+  margin: 0;
+  padding: 0px;
+  box-sizing: border-box;
+}
 .booking-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -60,7 +70,7 @@
 }
 
 .confirm-booking {
-  background-color: #003664;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 12px 20px;
@@ -72,7 +82,22 @@
 }
 
 .confirm-booking:hover {
-  background-color: #002244;
+  background-color: var(--secondary-color);
+}
+.popular-error-message button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.popular-error-message button:hover {
+  background-color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {

@@ -1,3 +1,13 @@
+:root{
+  --primary-color:#003664;
+  --secondary-color:#b13a26;
+  --third-color:#F0F8FF;
+}
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -49,7 +59,7 @@
 }
 
 .book-now-button {
-  background-color: #003664;
+  background-color: var(--primary-color);
   color: white;
   border: none;
   padding: 10px 20px;
@@ -60,5 +70,5 @@
 }
 
 .book-now-button:hover {
-  background-color: #002244;
+  background-color: var(--secondary-color);
 }

@@ -3,13 +3,16 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
 import { useAuth } from '../../Context/AuthContext';
+import Lottie from 'lottie-react';
+import Loader from '../../Components/Loaders/Booking.json';
+import Error from '../../Components/Loaders/Error.json';
 import '../Styles/BookingPage.css';
 
 const BookingPage = () => {
   const { user } = useAuth();
   const { _id } = useParams();
   const navigate = useNavigate();
-  const location = useLocation(); // ✅ Fix: useLocation for redirect state
+  const location = useLocation();
 
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,7 +25,6 @@ const BookingPage = () => {
     totalPrice: 0
   });
 
-  // Restore state if redirected from login
   useEffect(() => {
     if (!hotel && location.state?.hotel) {
       setHotel(location.state.hotel);
@@ -33,7 +35,6 @@ const BookingPage = () => {
     }
   }, [location.state]);
 
-  // Fetch hotel if not restored from state
   useEffect(() => {
     if (hotel) {
       setLoading(false);
@@ -43,7 +44,7 @@ const BookingPage = () => {
     const fetchHotel = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`http://localhost:3001/id/${_id}`);
+        const res = await fetch(`https://travelnest-3.onrender.com/api/hotels/id/${_id}`);
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(errorData.message || 'Failed to fetch hotel data');
@@ -62,7 +63,6 @@ const BookingPage = () => {
     fetchHotel();
   }, [_id, hotel]);
 
-  // Recalculate price
   useEffect(() => {
     if (hotel && bookingDetails.checkIn && bookingDetails.checkOut) {
       const checkInDate = new Date(bookingDetails.checkIn);
@@ -90,102 +90,119 @@ const BookingPage = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!user) {
-    alert('You need to login to confirm a booking');
-    navigate('/login', {
-      state: {
-        from: `/booking/${_id}`,
-        hotel,
-        bookingDetails
+    if (!user) {
+      alert('You need to login to confirm a booking');
+      navigate('/login', {
+        state: {
+          from: `/booking/${_id}`,
+          hotel,
+          bookingDetails
+        }
+      });
+      return;
+    }
+
+    if (!bookingDetails.checkIn || !bookingDetails.checkOut) {
+      alert('Please select both check-in and check-out dates');
+      return;
+    }
+
+    const checkInDate = new Date(bookingDetails.checkIn);
+    const checkOutDate = new Date(bookingDetails.checkOut);
+
+    if (checkOutDate <= checkInDate) {
+      alert('Check-out date must be after check-in date');
+      return;
+    }
+
+    try {
+      const response = await fetch('https://travelnest-3.onrender.com/api/booking/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: user._id,
+          hotel,
+          checkIn: bookingDetails.checkIn,
+          checkOut: bookingDetails.checkOut,
+          guests: bookingDetails.guests,
+          totalPrice: bookingDetails.totalPrice
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setBookingDetails({
+          checkIn: '',
+          checkOut: '',
+          guests: 1,
+          totalPrice: 0
+        });
+
+        navigate('/my-bookings', {
+          state: {
+            hotel,
+            bookingDetails,
+            booking: data.booking
+          }
+        });
+      } else {
+        alert(data.message || 'Failed to confirm booking');
       }
-    });
-    return;
-  }
-
-  if (!bookingDetails.checkIn || !bookingDetails.checkOut) {
-    alert('Please select both check-in and check-out dates');
-    return;
-  }
-
-  const checkInDate = new Date(bookingDetails.checkIn);
-  const checkOutDate = new Date(bookingDetails.checkOut);
-
-  if (checkOutDate <= checkInDate) {
-    alert('Check-out date must be after check-in date');
-    return;
-  }
-
-  try {
-    const token = localStorage.getItem('token');
-
-    const response = await fetch('http://localhost:3001/bookings', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-    // no Authorization header since authMiddleware is removed
-  },
-  body: JSON.stringify({
-    user: user._id, // ✅ ensure this is sent
-    hotel,
-    checkIn: bookingDetails.checkIn,
-    checkOut: bookingDetails.checkOut,
-    guests: bookingDetails.guests,
-    totalPrice: bookingDetails.totalPrice
-  })
-});
-
-    const data = await response.json();
-
-    if (response.ok) {
-  // Reset the form fields after successful booking
-  setBookingDetails({
-    checkIn: '',
-    checkOut: '',
-    guests: 1,
-    totalPrice: 0
-  });
-
-  navigate('/my-bookings', {
-    state: {
-      hotel,
-      bookingDetails,
-      booking: data.booking
+    } catch (error) {
+      console.error('Booking submission error:', error);
+      alert('An error occurred while confirming your booking.');
     }
-  });
-    } else {
-      alert(data.message || 'Failed to confirm booking');
-    }
-  } catch (error) {
-    console.error('Booking submission error:', error);
-    alert('An error occurred while confirming your booking.');
-  }
-};
+  };
 
   if (loading) return (
-    <div className="loading-container">
+    <>
       <Header />
-      <p>Loading hotel details...</p>
+      <div className="popular-loader-container">
+        <Lottie
+          animationData={Loader}
+          loop
+          autoplay
+          style={{ width: 300, height: 300 }}
+        />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 
   if (error) return (
-    <div className="error-container">
+    <>
       <Header />
-      <p>Error: {error}</p>
-      <button onClick={() => window.location.reload()}>Try Again</button>
+      <div className="popular-error-container">
+        <div className="popular-error-message">
+          <p>Failed to fetch hotel data</p>
+          <button onClick={() => window.location.reload()}>Try Again</button>
+        </div>
+        <div className="popular-error-loader">
+          <Lottie
+            animationData={Error}
+            loop
+            autoplay
+            style={{ width: 200, height: 200 }}
+          />
+        </div>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 
   if (!hotel) return (
-    <div className="error-container">
+    <>
       <Header />
-      <p>Hotel not found</p>
+      <div className="popular-error-container">
+        <p>Hotel not found</p>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 
   return (

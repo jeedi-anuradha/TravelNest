@@ -12,7 +12,7 @@ export const WishlistProvider = ({ children }) => {
     const fetchWishlist = async () => {
       if (user) {
         try {
-          const response = await fetch(`http://localhost:3001/wishlist/${user._id || user.id}`);
+          const response = await fetch(`https://travelnest-3.onrender.com/api/wishlist/wishlist/${user._id || user.id}`);
           if (!response.ok) throw new Error('Failed to fetch wishlist');
           
           const data = await response.json();
@@ -36,7 +36,7 @@ export const WishlistProvider = ({ children }) => {
     }
     
     try {
-      const response = await fetch('http://localhost:3001/wishlist/post', {
+      const response = await fetch('https://travelnest-3.onrender.com/api/wishlist/wishlist/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export const WishlistProvider = ({ children }) => {
     
     try {
       const response = await fetch(
-        `http://localhost:3001/wishlist/${user._id || user.id}/${hotelId}`, 
+        `https://travelnest-3.onrender.com/api/wishlist/wishlist/${user._id || user.id}/${hotelId}`, 
         { method: 'DELETE' }
       );
       

@@ -1,12 +1,37 @@
-:root{
-  --primary-color:#003664;
-  --secondary-color:#b13a26;
+:root {
+  --primary-color: #003664;
+  --secondary-color: #b13a26;
 }
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+/* Main page layout */
+.popular-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Content area that grows to push footer down */
+.popular-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Loader container - takes remaining space */
+.loader-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
 .popular-heading {
   text-align: center;
   margin: 20px 0;
@@ -29,6 +54,11 @@
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.popular-hotels:hover {
+  transform: translateY(-5px);
 }
 
 .popular-hotels img {
@@ -47,15 +77,104 @@
   margin-top: 10px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .popular-hotels button:hover {
   background-color: var(--secondary-color);
 }
 
+.wishlist-heart {
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.popular-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.popular-main-content {
+  flex: 1;
+}
+
+.popular-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.popular-main-content {
+  flex: 1;
+}
+.popular-pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+.popular-pagination button {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+  }
+.popular-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.popular-error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  text-align: center;
+}
+
+.popular-error-message {
+  margin-bottom: 20px;
+}
+
+.popular-error-message p {
+  font-size: 1.2rem;
+  color: #b13a26;
+  font-weight: bold;
+}
+
+.popular-error-loader {
+  width: 200px;
+  height: 200px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .popular-hotels {
     width: 90%;
+  }
+  
+  .popular-container {
+    padding: 10px;
+    gap: 15px;
   }
 }

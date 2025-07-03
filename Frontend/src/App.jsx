@@ -12,7 +12,7 @@ import Hotels from "./Pages/Hotels";
 import HotelView from "./Pages/HotelView";
 import PopularHotels from "./Pages/PopularHotels";
 import { SearchProvider } from "./Context/SearchContext";
-import { WishlistProvider } from "./Context/WishListContext";
+import { WishlistProvider } from "./Context/WishlistContext";
 import { AuthProvider } from "./Context/AuthContext";
 import { useAuth } from "./Context/AuthContext";
 import Wishlist from "./Pages/Wishlist";
